@@ -29,7 +29,6 @@ function addMarker(loc) {
 }
 
 
-
 function panToLoc(lat, lng) {
     console.log('lat', lat, 'lng', lng);
 
