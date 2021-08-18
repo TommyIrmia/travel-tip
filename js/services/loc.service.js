@@ -6,7 +6,8 @@ export const locService = {
     createLoc,
     getLoc: getLocByCoords,
     deleteLoc,
-    getLocByName
+    getLocByName,
+    getWeather
 }
 
 const API_KEY = 'AIzaSyAFK3WXm2qO-8zSwLe3PKKP1OOgM375asM';
@@ -43,7 +44,6 @@ function getLocByName(bc, name) {
         .catch((err) => {
             console.log('Cannot reach server GOT:', err);
         })
-        // }
 }
 
 function createLoc(id, name, lat, lng) {
@@ -56,7 +56,6 @@ function createLoc(id, name, lat, lng) {
         createdAt: new Date(),
         updatedAt: 'hasnt been updated'
     }
-    console.log(loc);
 
     gLocs.push(loc);
     storageService.save(KEY, gLocs);
@@ -66,7 +65,6 @@ function getLocByCoords(lat, lng, cb) {
 
     const prm = axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${API_KEY}`)
     prm.then(res => {
-            console.log(res.data.results[0].formatted_address);
             const placeId = res.data.results[0].place_id;
             const placeName = res.data.results[0].formatted_address;
             createLoc(placeId, placeName, lat, lng);
@@ -75,3 +73,27 @@ function getLocByCoords(lat, lng, cb) {
             cb(gLocs)
         })
 }
+
+
+
+function getWeather(bc, lat, lng) {
+    const API = '50eaa7ad79344dabbbe21bda82485a31'
+    const url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&APPID=${API}`
+
+    axios.get(url)
+        .then((res) => {
+            const wheather = res.data.weather[0].description;
+
+            const wheatherImg = res.data.weather[0].icon;
+
+            bc(wheatherImg)
+        })
+        .catch((err) => {
+            console.log('Cannot reach server GOT:', err);
+        })
+
+}
+
+
+// `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${W_KEY}`
+// `http://api.openweathermap.org/data/2.5/weather?lat=32.0749831&lon=34.9120554&APPID=50eaa7ad79344dabbbe21bda82485a31`

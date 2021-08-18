@@ -2,6 +2,7 @@ import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
 
 
+
 let gLocation;
 
 window.onload = onInit;
@@ -58,6 +59,17 @@ function onDeleteLoc(id) {
         })
 }
 
+
+function onGetWeather(Location) {
+    locService.getWeather(renderWeather, Location.lat, Location.lng);
+}
+
+function renderWeather(img) {
+
+}
+
+
+
 function onEnterLoc(ev) {
     if (ev) ev.preventDefault();
     const elInput = document.querySelector('[name=search]');
@@ -66,9 +78,6 @@ function onEnterLoc(ev) {
     elInput.value = '';
 }
 
-function penTo(location) {
-    console.log(location);
-}
 
 function onGetLoc() {
     const location = gLocation;
@@ -99,6 +108,8 @@ function clickMap() {
         onGetPos(location);
         mapService.addMarker({ lat: location.lat, lng: location.lng });
         gLocation = location;
+        onGetWeather(gLocation)
+
     });
 }
 
