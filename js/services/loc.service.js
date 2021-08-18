@@ -26,15 +26,12 @@ function getLocs() {
     });
 }
 
-
 function GetlocByName(bc, name) {
-
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${name}&key=${placeKey}`
-
-
     axios.get(url)
         .then((res) => {
             const location = res.data.results[0].geometry.location;
+            console.log(location);
             bc(location)
         })
         .catch((err) => {

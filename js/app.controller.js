@@ -51,14 +51,12 @@ function onPanTo(lat, lng) {
     })
 }
 
-
 function onDeleteLoc(id) {
     locService.deleteLoc(id)
         .then(() => {
             renderLocs();
         })
 }
-
 
 function onEnterLoc(ev) {
     if (ev) ev.preventDefault();
