@@ -35,7 +35,7 @@ header button {
     margin-inline-end: 15px;
     background-color: rgb(146, 168, 153);
     color: white;
-    border: lightgreen outset 2px;
+    border: rgb(104, 163, 104) outset 2px;
 }
 
 header input {
