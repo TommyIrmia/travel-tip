@@ -9,6 +9,7 @@ window.onGetPos = onGetPos;
 window.onGetLoc = onGetLoc;
 window.onDeleteLoc = onDeleteLoc;
 window.onPanTo = onPanTo;
+window.onEnterLoc = onEnterLoc;
 
 function onInit() {
     mapService.initMap()
@@ -50,18 +51,29 @@ function onPanTo(lat, lng) {
     })
 }
 
+
 function onDeleteLoc(id) {
-    console.log(id);
     locService.deleteLoc(id)
         .then(() => {
             renderLocs();
         })
 }
 
+
+function onEnterLoc(ev) {
+    if (ev) ev.preventDefault();
+    const elInput = document.querySelector('[name=search]');
+    if (!elInput) return;
+    locService.GetlocByName(penTo, elInput.value)
+}
+
+function penTo(location) {
+    console.log(location);
+}
+
 function onGetLoc() {
     const location = gLocation;
     locService.getLoc(location.lat, location.lng, renderLocs);
-
 }
 
 function clickMap() {
