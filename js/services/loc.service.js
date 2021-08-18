@@ -13,8 +13,10 @@ const placeKey = 'AIzaSyAFK3WXm2qO-8zSwLe3PKKP1OOgM375asM';
 const KEY = 'locsDB'
 const gLocs = storageService.load(KEY) || [];
 
-function deleteLoc() {
-    console.log('deleting');
+function deleteLoc(locId) {
+    const locIdx = gLocs.findIndex(loc => { loc.id === locId });
+    return Promise.resolve(gLocs.splice(locIdx, 1));
+
 }
 
 function getLocs() {
