@@ -7,16 +7,14 @@ export const mapService = {
 var gMap;
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
-    console.log('InitMap');
     return _connectGoogleApi()
         .then(() => {
             console.log('google available');
             gMap = new google.maps.Map(
-                    document.querySelector('#map'), {
-                        center: { lat, lng },
-                        zoom: 15
-                    })
-                // console.log('Map!', gMap);
+                document.querySelector('#map'), {
+                    center: { lat, lng },
+                    zoom: 15
+                })
         })
 }
 
@@ -29,9 +27,13 @@ function addMarker(loc) {
     return marker;
 }
 
+
+// panTo()
+
 function panTo(lat, lng) {
-    var laLatLng = new google.maps.LatLng(lat, lng);
-    gMap.panTo(laLatLng);
+    var latLng = new google.maps.LatLng(lat, lng);
+    console.log(lat, lng);
+    gMap.panTo(latLng);
 }
 
 function _connectGoogleApi() {

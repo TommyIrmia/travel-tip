@@ -5,12 +5,10 @@ import { mapService } from './services/map.service.js'
 let gLocation;
 
 window.onload = onInit;
-window.onAddMarker = onAddMarker;
-window.onPanTo = onPanTo;
-window.onGetLocs = onGetLocs;
-window.onGetUserPos = onGetUserPos;
+window.onGetPos = onGetPos;
 window.onGetLoc = onGetLoc;
 window.onDeleteLoc = onDeleteLoc;
+window.onPanTo = onPanTo;
 
 function onInit() {
     mapService.initMap()
@@ -33,20 +31,11 @@ function getPosition() {
     })
 }
 
-function onAddMarker() {
-    console.log('Adding a marker');
-    mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 });
+function onAddMarker(lat, lng) {
+    mapService.addMarker({ lat, lng });
 }
 
-function onGetLocs() {
-    locService.getLocs()
-        .then(locs => {
-            console.log('Locations:', locs)
-            document.querySelector('.locs').innerText = JSON.stringify(locs)
-        })
-}
-
-function onGetUserPos(location) {
+function onGetPos(location) {
     getPosition()
         .then(pos => {
             // console.log('User position is:', pos.coords);
@@ -59,8 +48,9 @@ function onGetUserPos(location) {
         })
 }
 
-function onPanTo() {
+function onPanTo(lat, lng) {
     mapService.panTo(35.6895, 139.6917);
+    // mapService.panTo(lat, lng);
 }
 
 function onDeleteLoc(id) {
@@ -98,12 +88,11 @@ function clickMap() {
         );
         infoWindow.open(map);
         const location = JSON.parse(infoWindow.content)
-        onGetUserPos(location);
+        onGetPos(location);
+        onAddMarker(location.lat, location.lng);
         gLocation = location;
     });
 }
-
-
 
 function renderLocs() {
     const elLocsTable = document.querySelector('.locations-table tbody');
@@ -113,7 +102,7 @@ function renderLocs() {
             return `<tr>
             <td>${loc.name}</td>
             <td>${loc.weather}</td>
-            <td><button>GO</button></td>
+            <td><button onclick="onPanTo(${loc.lat}, ${loc.lng})" >GO</button></td>
             <td><button onclick="onDeleteLoc(${loc.id})">Delete</button></td>
         </tr>`
         })
