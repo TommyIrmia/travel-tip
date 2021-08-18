@@ -67,6 +67,7 @@ function onEnterLoc(ev) {
     const elInput = document.querySelector('[name=search]');
     if (!elInput) return;
     locService.GetlocByName(penTo, elInput.value)
+    elInput.value = '';
 }
 
 function penTo(location) {
