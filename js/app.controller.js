@@ -51,7 +51,6 @@ function onPanTo(lat, lng) {
     })
 }
 
-
 function onDeleteLoc(id) {
     locService.deleteLoc(id)
         .then(() => {
@@ -59,12 +58,11 @@ function onDeleteLoc(id) {
         })
 }
 
-
 function onEnterLoc(ev) {
     if (ev) ev.preventDefault();
     const elInput = document.querySelector('[name=search]');
     if (!elInput) return;
-    locService.GetlocByName(penTo, elInput.value)
+    locService.getLocByName(renderLocs, elInput.value)
     elInput.value = '';
 }
 
