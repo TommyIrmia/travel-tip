@@ -40,11 +40,12 @@ function onGetLocs() {
         })
 }
 
-function onGetUserPos() {
+function onGetUserPos(location) {
     getPosition()
         .then(pos => {
-            console.log('User position is:', pos.coords);
+            // console.log('User position is:', pos.coords);
             document.querySelector('.user-pos').innerText =
+                (location) ? `Latitude: ${location.lat} - Longitude: ${location.lng}` :
                 `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
         })
         .catch(err => {
@@ -81,6 +82,7 @@ function clickMap() {
             JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
         );
         infoWindow.open(map);
-        console.log(infoWindow.content);
+        const location = JSON.parse(infoWindow.content)
+        onGetUserPos(location);
     });
 }
