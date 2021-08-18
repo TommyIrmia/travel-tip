@@ -3,5 +3,42 @@
 }
 
 body {
-    background-color: rgb(171, 236, 190);
+    background-color: rgb(212, 248, 223);
+    margin: 0;
+    font-family: sans-serif;
+}
+
+header {
+    background-color: rgb(139, 167, 147);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 4px darkgreen solid;
+    padding: 0 30px;
+    color: white;
+}
+
+header h1 {
+    font-size: 2.5rem;
+}
+
+header .header-container {
+    display: flex;
+}
+
+header input,
+header button {
+    height: 2.812rem;
+}
+
+header button {
+    margin-inline-end: 15px;
+    background-color: rgb(146, 168, 153);
+    color: white;
+    border: rgb(104, 163, 104) outset 2px;
+}
+
+header input {
+    background-color: rgb(212, 248, 223);
+    border: 2px white solid;
 }
