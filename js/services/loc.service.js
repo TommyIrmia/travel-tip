@@ -36,6 +36,7 @@ function GetlocByName(bc, name) {
         return Promise.resolve(SearchedLocs[name]);
     }
 
+
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${name}&key=${placeKey}`
 
     axios.get(url)
@@ -45,7 +46,7 @@ function GetlocByName(bc, name) {
             bc(location)
         })
         .catch((err) => {
-            console.log('Cannot reach server yes:', err);
+            console.log('Cannot reach server:', err);
         })
 }
 
