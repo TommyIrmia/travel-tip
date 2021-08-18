@@ -28,7 +28,6 @@ function addMarker(loc) {
 }
 
 
-// panTo()
 
 function panToLoc(lat, lng) {
     const latLng = new google.maps.LatLng(lat, lng);
