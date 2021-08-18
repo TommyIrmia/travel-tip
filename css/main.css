@@ -16,6 +16,7 @@ header {
     border-bottom: 4px darkgreen solid;
     padding: 0 30px;
     color: white;
+    max-height: 150px;
 }
 
 header h1 {
@@ -28,17 +29,72 @@ header .header-container {
 
 header input,
 header button {
-    height: 2.812rem;
+    height: 2.5rem;
+    min-width: 100px;
+    font-weight: 700;
+    font-size: 1.15rem;
 }
 
-header button {
+button {
     margin-inline-end: 15px;
     background-color: rgb(146, 168, 153);
     color: white;
     border: rgb(104, 163, 104) outset 2px;
 }
 
+button:active {
+    border: rgb(104, 163, 104) inset 2px;
+}
+
 header input {
     background-color: rgb(212, 248, 223);
     border: 2px white solid;
+}
+
+.main-container {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    grid-template-rows: 1fr 2fr 2fr;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.main-container .location-container {
+    grid-column: 1/3;
+    grid-row: 1;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.main-container .location-container h3 {
+    background-color: rgb(139, 167, 147);
+    padding: 15px;
+    border: rgb(104, 163, 104) solid 5px;
+    color: white;
+    margin: 0;
+}
+
+.main-container .location-container button {
+    height: 60px;
+    font-size: 1.2rem;
+}
+
+.main-container .map-container {
+    /* width: 45%; */
+    grid-row: 2/4;
+}
+
+.main-container .weather-container {
+    padding: 20px;
+    background-color: lightgray;
+    border: rgb(240, 240, 240) solid 5px;
+}
+
+.main-container .locations-table {
+    grid-row: 3;
+    grid-column: 2;
+    background-color: rgb(240, 240, 240);
+    border: lightgray solid 5px;
 }
