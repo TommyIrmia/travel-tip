@@ -9,7 +9,7 @@ window.onGetPos = onGetPos;
 window.onGetLoc = onGetLoc;
 window.onDeleteLoc = onDeleteLoc;
 window.onPanTo = onPanTo;
-window.onEnterLoc = onEnterLoc;
+window.onSearchLoc = onSearchLoc;
 
 function onInit() {
     mapService.initMap()
@@ -58,7 +58,7 @@ function onDeleteLoc(id) {
         })
 }
 
-function onEnterLoc(ev) {
+function onSearchLoc(ev) {
     if (ev) ev.preventDefault();
     const elInput = document.querySelector('[name=search]');
     if (!elInput) return;

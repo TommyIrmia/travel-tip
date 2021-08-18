@@ -98,9 +98,18 @@ header input {
     background-color: rgb(240, 240, 240);
     border: lightgray solid 5px;
     display: flex;
-    justify-content: space-evenly;
     min-width: 440px;
     align-items: baseline;
+}
+
+table {
+    width: 100%;
+}
+
+.locations-table table th {
+    background-color: rgb(59, 53, 53);
+    color: white;
+    height: 45px;
 }
 
 .locations-table th,
@@ -112,7 +121,9 @@ header input {
 }
 
 .action {
-    margin-inline-start: 15px;
+    margin-inline-end: unset;
+    padding: 0px 20px;
+    font-weight: 900;
 }
 
 @media (max-width: 980px) {

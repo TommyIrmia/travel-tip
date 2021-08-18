@@ -11,12 +11,17 @@ export const locService = {
 
 const API_KEY = 'AIzaSyAFK3WXm2qO-8zSwLe3PKKP1OOgM375asM';
 const KEY = 'locsDB';
-const SEARCH_KEY = 'searchDB';
 const gLocs = storageService.load(KEY) || [];
 
 function deleteLoc(locId) {
-    const locIdx = gLocs.findIndex(loc => { loc.id === locId });
-    return Promise.resolve(gLocs.splice(locIdx, 1));
+    const locIdx = gLocs.findIndex(loc => {
+        console.log(loc.id, locId);
+        return loc.id === locId
+    });
+    gLocs.splice(locIdx, 1);
+    storageService.save(KEY, gLocs);
+    return Promise.resolve(gLocs);
+
 }
 
 function getLocs() {
@@ -27,12 +32,12 @@ function getLocs() {
 
 function getLocByName(bc, name) {
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${name}&key=${API_KEY}`;
+    const isExist = gLocs.every(loc => loc.name !== name)
+    if (!isExist) {
+        console.log('already exists');
+        return;
+    }
 
-    const SearchedLocs = storageService.load(SEARCH_KEY) || [];
-    // if (SearchedLocs[name].length) {
-    //     console.log('from cache');
-    //     return Promise.resolve(SearchedLocs[name]);
-    // } else {
     axios.get(url)
         .then((res) => {
             const placeId = res.data.results[0].place_id;
