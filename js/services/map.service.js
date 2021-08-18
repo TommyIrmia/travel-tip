@@ -19,7 +19,10 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
 }
 
 function addMarker(loc) {
-    var marker = new google.maps.Marker({
+    if (gMarker) {
+        gMarker.setMap(null)
+    }
+    gMarker = new google.maps.Marker({
         position: loc,
         map: gMap,
         title: 'Hello World!'
