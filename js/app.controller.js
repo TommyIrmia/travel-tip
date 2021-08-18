@@ -19,7 +19,6 @@ function onInit() {
             clickMap()
         })
         .catch(() => console.log('Error: cannot init map'));
-
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -47,8 +46,8 @@ function onGetUserPos(location) {
         .then(pos => {
             // console.log('User position is:', pos.coords);
             document.querySelector('.user-pos').innerText =
-                (location) ? `Latitude: ${location.lat} - Longitude: ${location.lng}` :
-                `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
+                (location) ? `Latitude: ${location.lat.toFixed(5)} - Longitude: ${location.lng.toFixed(5)}` :
+                `Latitude: ${pos.coords.latitude.toFixed(5)} - Longitude: ${pos.coords.longitude.toFixed(5)}`;
         })
         .catch(err => {
             console.log('err!!!', err);
