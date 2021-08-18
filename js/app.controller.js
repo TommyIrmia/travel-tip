@@ -50,16 +50,13 @@ function onGetPos(location) {
 }
 
 function onPanTo(lat, lng) {
-    mapService.panTo(35.6895, 139.6917);
-    // mapService.panTo(lat, lng);
+    mapService.panToLoc(lat, lng);
 }
 
 function onDeleteLoc(id) {
     console.log(id);
-    // locService.deleteLoc()
-    // .then(() => {
-    //     console.log('google');
-    // })
+    locService.deleteLoc()
+        .then(() => {})
 }
 
 
@@ -110,8 +107,8 @@ function renderLocs() {
             return `<tr>
             <td>${loc.name}</td>
             <td>${loc.weather}</td>
-            <td><button onclick="onPanTo(${loc.lat}, ${loc.lng})" >GO</button></td>
-            <td><button onclick="onDeleteLoc(${loc.id})">Delete</button></td>
+            <td><button onclick="onPanTo(${loc.lat+''}, ${loc.lng+''})" >GO</button></td>
+            <td><button onclick="onDeleteLoc('${loc.id}')" >Delete</button></td>
         </tr>`
         })
         elLocsTable.innerHTML = strHTMLs.join('')

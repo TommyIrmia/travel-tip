@@ -1,7 +1,7 @@
 export const mapService = {
     initMap,
     addMarker,
-    panTo
+    panToLoc
 }
 
 var gMap;
@@ -30,9 +30,9 @@ function addMarker(loc) {
 
 // panTo()
 
-function panTo(lat, lng) {
-    var latLng = new google.maps.LatLng(lat, lng);
-    console.log(lat, lng);
+function panToLoc(lat, lng) {
+    const latLng = new google.maps.LatLng(lat, lng);
+    console.log(latLng);
     gMap.panTo(latLng);
 }
 
