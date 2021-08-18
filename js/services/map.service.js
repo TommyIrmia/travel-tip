@@ -3,35 +3,37 @@ export const mapService = {
     addMarker,
     panToLoc
 }
-
 var gMap;
+var gMarker;
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     return _connectGoogleApi()
-        .then(() => {
-            console.log('google available');
+        .then((result) => {
             gMap = new google.maps.Map(
                 document.querySelector('#map'), {
                     center: { lat, lng },
                     zoom: 15
                 })
+            return gMap
         })
 }
 
 function addMarker(loc) {
-    console.log(gMap);
-    var marker = new google.maps.Marker({
+    if (gMarker) {
+        gMarker.setMap(null)
+        gMarker = {};
+    }
+    gMarker = new google.maps.Marker({
         position: loc,
         map: gMap,
         title: 'Hello World!'
     });
-    return marker;
+    return gMarker;
 }
-
 
 function panToLoc(lat, lng) {
     console.log('lat', lat, 'lng', lng);
-
+    addMarker({ lat, lng })
     const latLng = new google.maps.LatLng(lat, lng);
     gMap.panTo(latLng);
 }

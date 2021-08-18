@@ -1,7 +1,6 @@
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
 
-
 let gLocation;
 
 window.onload = onInit;
@@ -10,14 +9,17 @@ window.onGetLoc = onGetLoc;
 window.onDeleteLoc = onDeleteLoc;
 window.onPanTo = onPanTo;
 window.onSearchLoc = onSearchLoc;
+window.onAddMarker = onAddMarker;
 
 function onInit() {
-    mapService.initMap()
-        .then(() => {
+    const prm = mapService.initMap()
+    console.log(prm);
+    prm.then((map) => {
             console.log('Map is ready');
+            return map
         })
-        .then(() => {
-            clickMap()
+        .then((map) => {
+            clickMap(map)
         })
         .catch(() => console.log('Error: cannot init map'));
 
@@ -64,10 +66,7 @@ function onSearchLoc(ev) {
     if (!elInput) return;
     locService.getLocByName(renderLocs, elInput.value)
     elInput.value = '';
-}
 
-function penTo(location) {
-    console.log(location);
 }
 
 function onGetLoc() {
@@ -75,31 +74,16 @@ function onGetLoc() {
     locService.getLoc(location.lat, location.lng, renderLocs);
 }
 
-function clickMap() {
-    const myLatlng = { lat: 32.0749831, lng: 34.9120554 };
-    const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 14,
-        center: myLatlng,
-    });
-    let infoWindow = new google.maps.InfoWindow({
-        content: "Click the map to get Lat/Lng!",
-        position: myLatlng,
-    });
-    infoWindow.open(map);
+function clickMap(map) {
     map.addListener("click", (mapsMouseEvent) => {
-        infoWindow.close();
-        infoWindow = new google.maps.InfoWindow({
-            position: mapsMouseEvent.latLng,
-        });
-        infoWindow.setContent(
-            JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
-        );
-        infoWindow.open(map);
-        const location = JSON.parse(infoWindow.content)
-        onGetPos(location);
-        mapService.addMarker({ lat: location.lat, lng: location.lng });
-        gLocation = location;
+        gLocation = mapsMouseEvent.latLng.toJSON();
+        onAddMarker(gLocation.lat, gLocation.lng);
+        onGetPos(gLocation);
     });
+}
+
+function onAddMarker(lat, lng) {
+    mapService.addMarker({ lat, lng });
 }
 
 function renderLocs() {
