@@ -10,6 +10,7 @@ window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
 window.onGetLoc = onGetLoc;
+window.onDeleteLoc = onDeleteLoc;
 
 function onInit() {
     mapService.initMap()
@@ -62,6 +63,13 @@ function onPanTo() {
     mapService.panTo(35.6895, 139.6917);
 }
 
+function onDeleteLoc(id) {
+    console.log(id);
+    // locService.deleteLoc()
+    // .then(() => {
+    //     console.log('google');
+    // })
+}
 
 function onGetLoc() {
     const location = gLocation;
@@ -96,6 +104,7 @@ function clickMap() {
 }
 
 
+
 function renderLocs() {
     const elLocsTable = document.querySelector('.locations-table tbody');
     const locPrm = locService.getLocs();
@@ -105,7 +114,7 @@ function renderLocs() {
             <td>${loc.name}</td>
             <td>${loc.weather}</td>
             <td><button>GO</button></td>
-            <td><button>Delete</button></td>
+            <td><button onclick="onDeleteLoc(${loc.id})">Delete</button></td>
         </tr>`
         })
         elLocsTable.innerHTML = strHTMLs.join('')
