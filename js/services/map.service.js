@@ -19,6 +19,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
 }
 
 function addMarker(loc) {
+    console.log(gMap);
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
@@ -30,8 +31,9 @@ function addMarker(loc) {
 
 
 function panToLoc(lat, lng) {
+    console.log('lat', lat, 'lng', lng);
+
     const latLng = new google.maps.LatLng(lat, lng);
-    console.log(latLng);
     gMap.panTo(latLng);
 }
 

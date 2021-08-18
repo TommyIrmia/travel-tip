@@ -16,7 +16,6 @@ header {
     border-bottom: 4px darkgreen solid;
     padding: 0 30px;
     color: white;
-    max-height: 150px;
 }
 
 header h1 {
@@ -53,10 +52,10 @@ header input {
 
 .main-container {
     display: grid;
-    grid-template-columns: 3fr 2fr;
-    grid-template-rows: 1fr 3fr 6fr;
+    grid-template-columns: 4fr 3fr;
+    grid-template-rows: 65px 3fr 7fr;
     gap: 20px;
-    padding: 0 20px;
+    padding: 20px 20px;
 }
 
 .main-container .location-container {
@@ -73,7 +72,7 @@ header input {
     padding: 15px;
     border: rgb(104, 163, 104) solid 5px;
     color: white;
-    margin: 0;
+    margin: 0 0;
 }
 
 .main-container .location-container button {
@@ -82,8 +81,8 @@ header input {
 }
 
 .main-container .map-container {
-    height: 100%;
     grid-row: 2/4;
+    height: 600px;
 }
 
 .main-container .weather-container {
@@ -93,8 +92,89 @@ header input {
 }
 
 .main-container .locations-table {
+    text-align: center;
     grid-row: 3;
     grid-column: 2;
     background-color: rgb(240, 240, 240);
     border: lightgray solid 5px;
+    display: flex;
+    justify-content: space-evenly;
+    min-width: 440px;
+    align-items: baseline;
+}
+
+.locations-table th,
+.locations-table td {
+    border: rgb(139, 139, 139) solid 2px;
+    background-color: lightgray;
+    padding: 5px;
+    font-size: 1rem;
+}
+
+.action {
+    margin-inline-start: 15px;
+}
+
+@media (max-width: 980px) {
+    .main-container {
+        display: grid;
+        grid-template-columns: 2fr 3fr;
+        grid-template-rows: 65px 4fr 3fr;
+        gap: 20px;
+    }
+    .main-container .location-container {
+        grid-column: 1/3;
+        grid-row: 1;
+    }
+    .main-container .map-container {
+        grid-row: 2/3;
+        grid-column: 1/3;
+    }
+    .main-container .locations-table {
+        grid-row: 3;
+        grid-column: 2;
+    }
+    .main-container .weather-container {
+        padding: 20px;
+        background-color: lightgray;
+        border: rgb(240, 240, 240) solid 5px;
+    }
+}
+
+@media (max-width: 780px) {
+    header {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0;
+    }
+    header h1 {
+        text-align: center;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+    header input {
+        margin-inline-end: 15px;
+    }
+    .main-container .location-container button {
+        margin-inline-start: 20px;
+    }
+    header button {
+        min-width: 60px;
+        margin-bottom: 24px;
+    }
+    .main-container {
+        display: grid;
+        grid-template-columns: 2fr 3fr;
+        grid-template-rows: 100px 55% 30% 15%;
+        gap: 20px;
+    }
+    .main-container .locations-table {
+        grid-row: 3;
+        grid-column: 1/3;
+        min-height: 255px;
+    }
+    .main-container .weather-container {
+        grid-row: 4;
+        grid-column: 1/3;
+    }
 }
