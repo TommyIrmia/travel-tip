@@ -54,7 +54,7 @@ header input {
 .main-container {
     display: grid;
     grid-template-columns: 3fr 2fr;
-    grid-template-rows: 1fr 2fr 2fr;
+    grid-template-rows: 1fr 3fr 6fr;
     gap: 20px;
     padding: 0 20px;
 }
@@ -82,7 +82,7 @@ header input {
 }
 
 .main-container .map-container {
-    /* width: 45%; */
+    height: 100%;
     grid-row: 2/4;
 }
 
