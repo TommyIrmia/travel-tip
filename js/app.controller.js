@@ -21,7 +21,6 @@ function onInit() {
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
-    console.log('Getting Pos');
     return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject)
     })
@@ -54,27 +53,22 @@ function onGetUserPos(location) {
 }
 
 function onPanTo() {
-    console.log('Panning the Map');
     mapService.panTo(35.6895, 139.6917);
 }
 
 function clickMap() {
     const myLatlng = { lat: 32.0749831, lng: 34.9120554 };
     const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 4,
+        zoom: 14,
         center: myLatlng,
     });
-    // Create the initial InfoWindow.
     let infoWindow = new google.maps.InfoWindow({
         content: "Click the map to get Lat/Lng!",
         position: myLatlng,
     });
     infoWindow.open(map);
-    // Configure the click listener.
     map.addListener("click", (mapsMouseEvent) => {
-        // Close the current InfoWindow.
         infoWindow.close();
-        // Create a new InfoWindow.
         infoWindow = new google.maps.InfoWindow({
             position: mapsMouseEvent.latLng,
         });
