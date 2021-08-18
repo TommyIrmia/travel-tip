@@ -1,9 +1,11 @@
 import { storageService } from './storage.service.js'
 
+const LOC_KEY = 'locDB';
 
 export const locService = {
     getLocs,
-    createLoc
+    createLoc,
+    copyLoc
 }
 
 const gLocs = [
@@ -20,6 +22,12 @@ function getLocs() {
     });
 }
 
+
+function copyLoc(location) {
+    // console.log(location);
+    storageService.save(LOC_KEY, location)
+}
+
 function createLoc(id = '1', name, lat, lng) {
     return {
         id,
@@ -32,11 +40,11 @@ function createLoc(id = '1', name, lat, lng) {
     }
 }
 
-getId(32.07389546666, 34.78003970715)
+// getId(32.07389546666, 34.78003970715)
 
-function getId(lat, lng) {
-    const prm = axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=32.07389546666,34.78003970715&radius=1500&key=AIzaSyAFK3WXm2qO-8zSwLe3PKKP1OOgM375asM`)
-    prm.then(res => {
-        console.log(res.data)
-    })
-}
+// function getId(lat, lng) {
+//     const prm = axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=32.07389546666,34.78003970715&radius=1500&key=AIzaSyAFK3WXm2qO-8zSwLe3PKKP1OOgM375asM`)
+//     prm.then(res => {
+//         console.log(res.data)
+//     })
+// }

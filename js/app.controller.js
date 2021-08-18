@@ -1,9 +1,10 @@
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
 
-let gLocation =
 
-    window.onload = onInit;
+let gLocation;
+
+window.onload = onInit;
 window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
@@ -61,7 +62,7 @@ function onPanTo() {
 
 function onCopyLoc() {
     const location = gLocation;
-
+    locService.copyLoc(location);
 }
 
 function clickMap() {
