@@ -12,9 +12,9 @@
     <header>
         <h1>TravelTip</h1>
         <div class="header-container">
-            <form>
-                <input type="text" placeholder="Enter Location" />
-                <button>GO</button>
+            <form onsubmit="onEnterLoc(event)">
+                <input type="text" name="search" placeholder="Enter Location" />
+                <button onclick="onEnterLoc()">GO</button>
             </form>
             <button onclick="onGetPos()" class="btn-user-pos">My Location</button>
         </div>

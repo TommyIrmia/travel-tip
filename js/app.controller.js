@@ -9,6 +9,7 @@ window.onGetPos = onGetPos;
 window.onGetLoc = onGetLoc;
 window.onDeleteLoc = onDeleteLoc;
 window.onPanTo = onPanTo;
+window.onEnterLoc = onEnterLoc;
 
 function onInit() {
     mapService.initMap()
@@ -59,6 +60,13 @@ function onDeleteLoc(id) {
     // .then(() => {
     //     console.log('google');
     // })
+}
+
+
+function onEnterLoc(ev) {
+    if (ev) ev.preventDefault();
+    const elInput = document.querySelector('[name=search]');
+
 }
 
 function onGetLoc() {
