@@ -14,7 +14,7 @@ const KEY = 'locsDB'
 const gLocs = storageService.load(KEY) || [];
 
 function deleteLoc() {
-    console.log('deleting');
+
 }
 
 function getLocs() {

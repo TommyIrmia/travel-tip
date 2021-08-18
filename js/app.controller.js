@@ -54,8 +54,7 @@ function onPanTo(lat, lng) {
 }
 
 function onDeleteLoc(id) {
-    console.log(id);
-    locService.deleteLoc()
+    locService.deleteLoc(id)
         .then(() => {})
 }
 
