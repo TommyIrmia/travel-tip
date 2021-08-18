@@ -9,7 +9,7 @@ window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
-window.onCopyLoc = onCopyLoc;
+window.onGetLoc = onGetLoc;
 
 function onInit() {
     mapService.initMap()
@@ -20,6 +20,9 @@ function onInit() {
             clickMap()
         })
         .catch(() => console.log('Error: cannot init map'));
+
+    renderLocs()
+
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -60,9 +63,10 @@ function onPanTo() {
 }
 
 
-function onCopyLoc() {
+function onGetLoc() {
     const location = gLocation;
-    locService.copyLoc(location);
+    locService.getLoc(location.lat, location.lng, renderLocs);
+
 }
 
 function clickMap() {
@@ -89,4 +93,21 @@ function clickMap() {
         onGetUserPos(location);
         gLocation = location;
     });
+}
+
+
+function renderLocs() {
+    const elLocsTable = document.querySelector('.locations-table tbody');
+    const locPrm = locService.getLocs();
+    locPrm.then(locs => {
+        const strHTMLs = locs.map(loc => {
+            return `<tr>
+            <td>${loc.name}</td>
+            <td>${loc.weather}</td>
+            <td><button>GO</button></td>
+            <td><button>Delete</button></td>
+        </tr>`
+        })
+        elLocsTable.innerHTML = strHTMLs.join('')
+    })
 }
