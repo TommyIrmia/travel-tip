@@ -16,6 +16,9 @@ function onInit() {
             clickMap()
         })
         .catch(() => console.log('Error: cannot init map'));
+
+    renderLocs()
+
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -78,4 +81,21 @@ function clickMap() {
         const location = JSON.parse(infoWindow.content)
         onGetUserPos(location);
     });
+}
+
+
+function renderLocs() {
+    const elLocsTable = document.querySelector('.locations-table tbody');
+    const locPrm = locService.getLocs();
+    locPrm.then(locs => {
+        const strHTMLs = locs.map(loc => {
+            return `<tr>
+            <td>${loc.name}</td>
+            <td>${loc.weather}</td>
+            <td><button>GO</button></td>
+            <td><button>Delete</button></td>
+        </tr>`
+        })
+        elLocsTable.innerHTML = strHTMLs.join('')
+    })
 }
