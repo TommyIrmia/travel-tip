@@ -71,7 +71,6 @@ function getLocByCoords(lat, lng, cb) {
         .then(() => {
             cb(gLocs)
         })
-<<<<<<< HEAD
 }
 
 
@@ -92,6 +91,4 @@ function getWeather(bc, lat, lng) {
             console.log('Cannot reach server GOT:', err);
         })
 
-=======
->>>>>>> 79807eeda97d5f7891f415e4eb5e7a5d12dfc668
 }
