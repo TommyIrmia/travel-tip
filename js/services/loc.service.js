@@ -12,14 +12,12 @@ export const locService = {
 
 const API_KEY = 'AIzaSyAFK3WXm2qO-8zSwLe3PKKP1OOgM375asM';
 const KEY = 'locsDB';
+const SEARCH_KEY = 'searchDB';
 const gLocs = storageService.load(KEY) || [];
 
 function deleteLoc(locId) {
-    const locIdx = gLocs.findIndex(loc => loc.id === locId);
-    gLocs.splice(locIdx, 1);
-    storageService.save(KEY, gLocs);
-    return Promise.resolve(gLocs);
-
+    const locIdx = gLocs.findIndex(loc => { loc.id === locId });
+    return Promise.resolve(gLocs.splice(locIdx, 1));
 }
 
 function getLocs() {
@@ -29,13 +27,13 @@ function getLocs() {
 }
 
 function getLocByName(bc, name) {
-    const isExist = gLocs.every(loc => loc.name !== name)
-    if (!isExist) {
-        console.log('already exists');
-        return;
-    }
-
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${name}&key=${API_KEY}`;
+
+    const SearchedLocs = storageService.load(SEARCH_KEY) || [];
+    // if (SearchedLocs[name].length) {
+    //     console.log('from cache');
+    //     return Promise.resolve(SearchedLocs[name]);
+    // } else {
     axios.get(url)
         .then((res) => {
             const placeId = res.data.results[0].place_id;
@@ -61,15 +59,10 @@ function createLoc(id, name, lat, lng) {
 
     gLocs.push(loc);
     storageService.save(KEY, gLocs);
-    return loc;
 }
 
 function getLocByCoords(lat, lng, cb) {
-    const isExist = gLocs.every(loc => { return loc.lat !== lat && loc.lng !== lng })
-    if (!isExist) {
-        console.log('already exists');
-        return;
-    }
+
     const prm = axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${API_KEY}`)
     prm.then(res => {
             const placeId = res.data.results[0].place_id;
@@ -100,7 +93,3 @@ function getWeather(bc, lat, lng) {
         })
 
 }
-
-
-// `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&APPID=${W_KEY}`
-// `http://api.openweathermap.org/data/2.5/weather?lat=32.0749831&lon=34.9120554&APPID=50eaa7ad79344dabbbe21bda82485a31`
