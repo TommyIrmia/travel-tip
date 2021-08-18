@@ -12,10 +12,10 @@ window.onDeleteLoc = onDeleteLoc;
 window.onPanTo = onPanTo;
 window.onSearchLoc = onSearchLoc;
 window.onAddMarker = onAddMarker;
+window.onGetWeather = onGetWeather;
 
 function onInit() {
     const prm = mapService.initMap()
-    console.log(prm);
     prm.then((map) => {
             console.log('Map is ready');
             return map
@@ -27,6 +27,37 @@ function onInit() {
 
     renderLocs()
 
+}
+
+function renderWeather(weather, url) {
+    document.querySelector('.weather-container h2').innerText = weather;
+    document.querySelector('.weather-container img').src = url;
+    renderLocs();
+}
+
+function renderLocs() {
+    const elLocsTable = document.querySelector('.locations-table tbody');
+    const locPrm = locService.getLocs();
+    locPrm.then(locs => {
+        const strHTMLs = locs.map(loc => {
+            return `<tr>
+            <td>${loc.name}</td>
+            <td class="weather">${loc.weather}</td>
+            <td><button class="action" onclick="onPanTo(${loc.lat}, ${loc.lng})" >GO</button></td>
+            <td><button class="action" onclick="onDeleteLoc('${loc.id}')" >Delete</button></td>
+        </tr>`
+        })
+        elLocsTable.innerHTML = strHTMLs.join('')
+    })
+}
+
+function clickMap(map) {
+    map.addListener("click", (mapsMouseEvent) => {
+        gLocation = mapsMouseEvent.latLng.toJSON();
+        onGetWeather(gLocation)
+        onAddMarker(gLocation.lat, gLocation.lng);
+        onGetPos(gLocation);
+    });
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -62,24 +93,16 @@ function onDeleteLoc(id) {
         })
 }
 
-
 function onGetWeather(Location) {
     locService.getWeather(renderWeather, Location.lat, Location.lng);
 }
-
-function renderWeather(img) {
-
-}
-
-
 
 function onSearchLoc(ev) {
     if (ev) ev.preventDefault();
     const elInput = document.querySelector('[name=search]');
     if (!elInput) return;
-    locService.getLocByName(renderLocs, elInput.value)
+    locService.getLocByName(onGetWeather, renderLocs, elInput.value)
     elInput.value = '';
-
 }
 
 function onGetLoc() {
@@ -87,30 +110,6 @@ function onGetLoc() {
     locService.getLoc(location.lat, location.lng, renderLocs);
 }
 
-function clickMap(map) {
-    map.addListener("click", (mapsMouseEvent) => {
-        gLocation = mapsMouseEvent.latLng.toJSON();
-        onAddMarker(gLocation.lat, gLocation.lng);
-        onGetPos(gLocation);
-    });
-}
-
 function onAddMarker(lat, lng) {
     mapService.addMarker({ lat, lng });
-}
-
-function renderLocs() {
-    const elLocsTable = document.querySelector('.locations-table tbody');
-    const locPrm = locService.getLocs();
-    locPrm.then(locs => {
-        const strHTMLs = locs.map(loc => {
-            return `<tr>
-            <td>${loc.name}</td>
-            <td>${loc.weather}</td>
-            <td><button class="action" onclick="onPanTo(${loc.lat}, ${loc.lng})" >GO</button></td>
-            <td><button class="action" onclick="onDeleteLoc('${loc.id}')" >Delete</button></td>
-        </tr>`
-        })
-        elLocsTable.innerHTML = strHTMLs.join('')
-    })
 }
