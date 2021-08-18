@@ -1,11 +1,14 @@
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
 
-window.onload = onInit;
+let gLocation =
+
+    window.onload = onInit;
 window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
+window.onCopyLoc = onCopyLoc;
 
 function onInit() {
     mapService.initMap()
@@ -56,6 +59,12 @@ function onPanTo() {
     mapService.panTo(35.6895, 139.6917);
 }
 
+
+function onCopyLoc() {
+    const location = gLocation;
+
+}
+
 function clickMap() {
     const myLatlng = { lat: 32.0749831, lng: 34.9120554 };
     const map = new google.maps.Map(document.getElementById("map"), {
@@ -78,5 +87,6 @@ function clickMap() {
         infoWindow.open(map);
         const location = JSON.parse(infoWindow.content)
         onGetUserPos(location);
+        gLocation = location;
     });
 }
