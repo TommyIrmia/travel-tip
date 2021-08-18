@@ -32,10 +32,6 @@ function getPosition() {
     })
 }
 
-function onAddMarker(lat, lng) {
-    mapService.addMarker({ lat, lng });
-}
-
 function onGetPos(location) {
     getPosition()
         .then(pos => {
@@ -50,7 +46,9 @@ function onGetPos(location) {
 }
 
 function onPanTo(lat, lng) {
-    mapService.panToLoc(lat, lng);
+    const prm = new Promise(resolve => {
+        return resolve(mapService.panToLoc(lat, lng));
+    })
 }
 
 
@@ -101,7 +99,7 @@ function clickMap() {
         infoWindow.open(map);
         const location = JSON.parse(infoWindow.content)
         onGetPos(location);
-        onAddMarker(location.lat, location.lng);
+        mapService.addMarker({ lat: location.lat, lng: location.lng });
         gLocation = location;
     });
 }
@@ -114,8 +112,8 @@ function renderLocs() {
             return `<tr>
             <td>${loc.name}</td>
             <td>${loc.weather}</td>
-            <td><button onclick="onPanTo(${loc.lat+''}, ${loc.lng+''})" >GO</button></td>
-            <td><button onclick="onDeleteLoc('${loc.id}')" >Delete</button></td>
+            <td><button class="action" onclick="onPanTo(${loc.lat}, ${loc.lng})" >GO</button></td>
+            <td><button class="action" onclick="onDeleteLoc('${loc.id}')" >Delete</button></td>
         </tr>`
         })
         elLocsTable.innerHTML = strHTMLs.join('')
